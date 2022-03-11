@@ -1,1 +1,1 @@
-# Project-CovidCertificate
+# CovidCertificate
