@@ -9,9 +9,8 @@ namespace CovidCertificate.ViewModels.Certificate
     public class DisplayViewModel
     {
         public int Id { get; set; }
-        public DateTime IssueDate { get; set; }
-        public string ValidMonths { get; set; }
-        public bool IsValid { get; set; }
+        public DateTime EndDate { get; set; }
+        public int ValidMonths { get; set; }
         public User User { get; set; }
     }
 }

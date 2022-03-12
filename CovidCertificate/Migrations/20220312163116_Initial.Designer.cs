@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CovidCertificate.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220312103304_Initial")]
+    [Migration("20220312163116_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,17 +28,14 @@ namespace CovidCertificate.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsValid")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("IssueDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ValidMonths")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ValidMonths")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -154,14 +151,14 @@ namespace CovidCertificate.Migrations
                         {
                             Id = "adminId",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2ee9f351-aeef-4658-a43c-78732871970b",
+                            ConcurrencyStamp = "7aa98d4e-5c5a-41ab-b250-dbb661c721ef",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@covid.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@covid.bg",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOZv8Q7DUm3t851SnCQorYUR9UZCAfr5vOBcUrYV5fkATpdUexAcdpOwkFxQmVz8pA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELFkz3TCWKjZxTvq2mhAi6onvR13TIn5JbtZOjXT9oXEmAUxdwXql59jlyfGE6QUrw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -199,14 +196,14 @@ namespace CovidCertificate.Migrations
                         new
                         {
                             Id = "AdminRoleId",
-                            ConcurrencyStamp = "ba46a904-7ee9-4830-9fea-4c2fe5bd12aa",
+                            ConcurrencyStamp = "bf3df499-efb4-4ef5-8a00-ccba24c8b175",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "UserRoleId",
-                            ConcurrencyStamp = "2ef31a9a-4f66-48d3-88e5-45a78ab89dcb",
+                            ConcurrencyStamp = "5f548702-b05a-4058-9e10-9377fba41b76",
                             Name = "User",
                             NormalizedName = "USER"
                         });

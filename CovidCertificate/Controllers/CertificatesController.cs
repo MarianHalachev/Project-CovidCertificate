@@ -27,23 +27,54 @@ namespace CovidCertificate.Controllers
             _context = context;
         }
 
+        public IActionResult NotAvailable()
+        {
+            return this.View();
+        }
+
+        public IActionResult Available()
+        {
+            return this.View();
+        }
+
+        public IActionResult Check(DateTime endDate, int validMonths, int id) 
+        {
+            var certificate = this.covidService.GetCertificateById(id);
+            var model = new DetailsViewModel()
+            {
+                Id = certificate.Id,
+                EndDate = certificate.EndDate,
+                ValidMonths = certificate.ValidMonths,
+                User = certificate.User
+            };
+            if (certificate.EndDate>DateTime.UtcNow)
+            {
+
+                return RedirectToAction("Available", "Certificates");
+            }
+            else
+            {
+                return RedirectToAction("NotAvailable", "Certificates");
+            }      
+        }
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.Certificate.ToListAsync());
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult Create(CreateViewModel model)
         {
-            this.covidService.CreateCertificate(model.IssueDate, model.ValidMonths, model.IsValid);
+            this.covidService.CreateCertificate(model.EndDate, model.ValidMonths);
             return this.RedirectToAction("Index", "Home");
         }
 
@@ -54,9 +85,8 @@ namespace CovidCertificate.Controllers
             var model = new DetailsViewModel()
             {
                 Id = certificate.Id,
-                IssueDate = certificate.IssueDate,
+                EndDate = certificate.EndDate,
                 ValidMonths = certificate.ValidMonths,
-                IsValid = certificate.IsValid,
                 User = certificate.User
             };
 
@@ -71,9 +101,8 @@ namespace CovidCertificate.Controllers
             var model = new DetailsViewModel()
             {
                 Id = certificate.Id,
-                IssueDate = certificate.IssueDate,
+                EndDate = certificate.EndDate,
                 ValidMonths = certificate.ValidMonths,
-                IsValid = certificate.IsValid,
                 User = certificate.User
             };
             return this.View(model);
@@ -83,7 +112,7 @@ namespace CovidCertificate.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(DetailsViewModel model)
         {
-            this.covidService.EditCertificate(model.Id, model.IssueDate, model.ValidMonths, model.IsValid);
+            this.covidService.EditCertificate(model.Id, model.EndDate, model.ValidMonths);
             return this.RedirectToAction("Index", "Home");
         }
 

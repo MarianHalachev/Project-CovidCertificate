@@ -1,6 +1,6 @@
 ﻿@model CovidCertificate.ViewModels.Certificate.DetailsViewModel
 
-@{ ViewData["Title"] = "Details"; }
+@{ ViewData["Title"] = "Check"; }
 
 <h2>Details</h2>
 
@@ -8,22 +8,17 @@
     <h4>Certificate</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
+
         <dd>
             @Html.DisplayFor(model => model.EndDate)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ValidMonths)
-        </dt>
+
         <dd>
             @Html.DisplayFor(model => model.ValidMonths)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Check" asp-route-id="@Model.Id">Check</a>
     <a asp-action="Index">Back to List</a>
 </div>
