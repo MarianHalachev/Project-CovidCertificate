@@ -19,11 +19,26 @@ namespace CovidCertificate.Controllers
         private readonly ICovidService covidService;
         private readonly UserManager<User> userManager;
 
-        public SchoolsController(ICovidService covidService, UserManager<User> userManager)
+        private readonly ApplicationDbContext _context;
+
+       
+
+
+
+        public SchoolsController(ICovidService covidService, UserManager<User> userManager,
+            ApplicationDbContext context)
         {
             this.covidService = covidService;
             this.userManager = userManager;
+            _context = context;
         }
+
+      
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.School.ToListAsync());
+        }
+
 
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
@@ -77,26 +92,38 @@ namespace CovidCertificate.Controllers
             return this.RedirectToAction("Index", "Home");
         }
 
-        [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int id)
+        // GET: Schools/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            var school = this.covidService.GetSchoolById(id);
-            var model = new DetailsViewModel()
+            if (id == null)
             {
-                Id = school.Id,
-                CodeByAdmin = school.CodeByAdmin,
-                Name = school.Name,
-                Address = school.Address
-            };
-            return this.View(model);
+                return NotFound();
+            }
+
+            var school = await _context.School
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (school == null)
+            {
+                return NotFound();
+            }
+
+            return View(school);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public IActionResult Delete(DetailsViewModel model)
+        // POST: Schools/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            this.covidService.DeleteSchool(model.Id);
-            return this.RedirectToAction("Index", "Home");
+            var school = await _context.School.FindAsync(id);
+            _context.School.Remove(school);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool SchoolExists(int id)
+        {
+            return _context.School.Any(e => e.Id == id);
         }
     }
 }

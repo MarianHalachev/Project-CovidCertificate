@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CovidCertificate.Migrations
 {
-    public partial class Initial : Migration
+    public partial class covidCertificate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -203,17 +203,17 @@ namespace CovidCertificate.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "AdminRoleId", "4e2eb783-9075-44c6-9ba9-48a95aae274f", "Admin", "ADMIN" });
+                values: new object[] { "AdminRoleId", "daca2889-c1f8-4936-abfb-c9fce99c17b1", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "UserRoleId", "d814a74a-c33c-4e45-aa2e-7b50590f5aad", "User", "USER" });
+                values: new object[] { "UserRoleId", "2bb66e44-2cd1-4c47-9757-8a9efd62e6d0", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SchoolId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "adminId", 0, "36d1d238-4dd5-44d1-a664-4a08dd544e98", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@covid.bg", true, null, null, false, null, null, "admin@covid.bg", "ADMIN", "AQAAAAEAACcQAAAAEBAM1aeZx9VVjBlYgkCDdrToSj8yuxx+g0A0qtsuN9atTFaQHgEWe1ITVsUw6uDdjg==", null, false, null, "", false, "admin" });
+                values: new object[] { "adminId", 0, "f04f5e1a-7329-4c80-97f7-02c7052e5f42", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@covid.bg", true, null, null, false, null, null, "admin@covid.bg", "ADMIN", "AQAAAAEAACcQAAAAEAMNQqKP4Nb9p4dgAi7SLVJZJ+LuC3uKVTcku7FPj/yHFYG8G8af79rgZXCz5DZmfw==", null, false, null, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

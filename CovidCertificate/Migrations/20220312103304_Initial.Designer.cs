@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CovidCertificate.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220310144618_Initial")]
+    [Migration("20220312103304_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -154,14 +154,14 @@ namespace CovidCertificate.Migrations
                         {
                             Id = "adminId",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "36d1d238-4dd5-44d1-a664-4a08dd544e98",
+                            ConcurrencyStamp = "2ee9f351-aeef-4658-a43c-78732871970b",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@covid.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@covid.bg",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBAM1aeZx9VVjBlYgkCDdrToSj8yuxx+g0A0qtsuN9atTFaQHgEWe1ITVsUw6uDdjg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOZv8Q7DUm3t851SnCQorYUR9UZCAfr5vOBcUrYV5fkATpdUexAcdpOwkFxQmVz8pA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -199,14 +199,14 @@ namespace CovidCertificate.Migrations
                         new
                         {
                             Id = "AdminRoleId",
-                            ConcurrencyStamp = "4e2eb783-9075-44c6-9ba9-48a95aae274f",
+                            ConcurrencyStamp = "ba46a904-7ee9-4830-9fea-4c2fe5bd12aa",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "UserRoleId",
-                            ConcurrencyStamp = "d814a74a-c33c-4e45-aa2e-7b50590f5aad",
+                            ConcurrencyStamp = "2ef31a9a-4f66-48d3-88e5-45a78ab89dcb",
                             Name = "User",
                             NormalizedName = "USER"
                         });

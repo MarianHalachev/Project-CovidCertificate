@@ -18,12 +18,20 @@ namespace CovidCertificate.Controllers
     {
         private readonly ICovidService covidService;
         private readonly UserManager<User> userManager;
+        private readonly ApplicationDbContext _context;
 
-        public CertificatesController(ICovidService covidService, UserManager<User> userManager)
+        public CertificatesController(ICovidService covidService, UserManager<User> userManager,ApplicationDbContext context)
         {
             this.covidService = covidService;
             this.userManager = userManager;
+            _context = context;
         }
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Certificate.ToListAsync());
+        }
+
 
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
@@ -79,28 +87,44 @@ namespace CovidCertificate.Controllers
             return this.RedirectToAction("Index", "Home");
         }
 
+        
+
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int id)
+        // GET: Certificates/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            var certificate = this.covidService.GetCertificateById(id);
-            var model = new DetailsViewModel()
+            if (id == null)
             {
-                Id = certificate.Id,
-                IssueDate = certificate.IssueDate,
-                ValidMonths = certificate.ValidMonths,
-                IsValid = certificate.IsValid,
-                User = certificate.User
-            };
-            return this.View(model);
+                return NotFound();
+            }
+
+            var certificate = await _context.Certificate
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (certificate == null)
+            {
+                return NotFound();
+            }
+
+            return View(certificate);
         }
 
-        [HttpPost]
+        // POST: Certificates/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(DetailsViewModel model)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            this.covidService.DeleteCertificate(model.Id);
-            return this.RedirectToAction("Index", "Home");
+            var certificate = await _context.Certificate.FindAsync(id);
+            _context.Certificate.Remove(certificate);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
-        
+
+        private bool CertificateExists(int id)
+        {
+            return _context.Certificate.Any(e => e.Id == id);
+        }
+
+
     }
 }
