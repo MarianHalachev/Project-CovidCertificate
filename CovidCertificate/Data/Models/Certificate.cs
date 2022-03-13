@@ -9,6 +9,7 @@ namespace CovidCertificate.Data.Models
     public class Certificate
     {
         public int Id { get; set; }
+        public DateTime DateOfIssue { get; set; }
         public DateTime EndDate { get; set; }
         public int ValidMonths { get; set; } 
         public User User { get; set; }

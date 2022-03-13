@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace CovidCertificate.ViewModels.Certificate
 {
     public class CreateViewModel
-    {
+    {   [Required]
+        [Display(Name ="DateOfIssue")]
+        public DateTime DateOfIssue { get; set; }
         [Required]
         [Display(Name ="EndDate")]
         public DateTime EndDate { get; set; }

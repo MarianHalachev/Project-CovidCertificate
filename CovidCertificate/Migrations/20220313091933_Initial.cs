@@ -184,6 +184,7 @@ namespace CovidCertificate.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    DateOfIssue = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ValidMonths = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
@@ -202,17 +203,17 @@ namespace CovidCertificate.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "AdminRoleId", "bf3df499-efb4-4ef5-8a00-ccba24c8b175", "Admin", "ADMIN" });
+                values: new object[] { "AdminRoleId", "3d160b82-07e1-471d-82ed-d1eb6e2ea9f1", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "UserRoleId", "5f548702-b05a-4058-9e10-9377fba41b76", "User", "USER" });
+                values: new object[] { "UserRoleId", "182c3666-d335-4232-b8e1-766362d9ee75", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SchoolId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "adminId", 0, "7aa98d4e-5c5a-41ab-b250-dbb661c721ef", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@covid.bg", true, null, null, false, null, null, "admin@covid.bg", "ADMIN", "AQAAAAEAACcQAAAAELFkz3TCWKjZxTvq2mhAi6onvR13TIn5JbtZOjXT9oXEmAUxdwXql59jlyfGE6QUrw==", null, false, null, "", false, "admin" });
+                values: new object[] { "adminId", 0, "f7c717b6-5fc7-410e-9139-8b5e3c5ea302", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@covid.bg", true, null, null, false, null, null, "admin@covid.bg", "ADMIN", "AQAAAAEAACcQAAAAECfrlww9vN1GZ9K+sWvX3GJ1D0yOR0xArZ6Cqf4dadpg7VlqoBnJHLfFAewWmpYy0w==", null, false, null, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

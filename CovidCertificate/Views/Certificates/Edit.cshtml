@@ -4,9 +4,13 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center">Edit Product</h1>
+<h1 class="text-center">Edit</h1>
 <hr class="hr-2 bg-dark" />
 <form class="mx-auto half-width" method="post" asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="DateOfIssue"></label>
+        <input asp-for="DateOfIssue" class="form-control" placeholder="DateOfIssue..." value="@Model.DateOfIssue" />
+    </div>
     <div class="form-group">
         <label asp-for="EndDate"></label>
         <input asp-for="EndDate" class="form-control" placeholder="EndData..." value="@Model.EndDate" />

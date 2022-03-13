@@ -9,6 +9,12 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.DateOfIssue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfIssue)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.EndDate)
         </dt>
         <dd>
@@ -24,6 +30,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Check" asp-route-id="@Model.Id">Check</a>
     <a asp-action="Index">Back to List</a>
 </div>

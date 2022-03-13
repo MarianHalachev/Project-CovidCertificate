@@ -45,6 +45,7 @@ namespace CovidCertificate.Controllers
                 var model = new DisplayViewModel
                 {
                     Id= certificate.Id,
+                    DateOfIssue = certificate.DateOfIssue,
                     EndDate = certificate.EndDate,
                     ValidMonths=certificate.ValidMonths,
        

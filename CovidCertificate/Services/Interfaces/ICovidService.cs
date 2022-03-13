@@ -8,13 +8,13 @@ namespace CovidCertificate.Services.Interfaces
 {
     public interface ICovidService
     {
-        void CheckCertificate(DateTime endDate, int validMonths,int id);
-        void CreateCertificate(DateTime endDate,int validMonths);
+        void CheckCertificate(DateTime dateofIssue,DateTime endDate, int validMonths,int id);
+        void CreateCertificate(DateTime dateofIssue,DateTime endDate,int validMonths);
         List<Certificate> GetAllCertificates();
 
         Certificate GetCertificateById(int id);
 
-        void EditCertificate(int certificateId,DateTime endDate,int validMonths);
+        void EditCertificate(int certificateId,DateTime dateofIssue,DateTime endDate,int validMonths);
 
         void DeleteCertificate(int certificateId);
 
