@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CovidCertificate.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220313091933_Initial")]
+    [Migration("20220313200742_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +42,9 @@ namespace CovidCertificate.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Certificate");
                 });
@@ -154,14 +156,14 @@ namespace CovidCertificate.Migrations
                         {
                             Id = "adminId",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f7c717b6-5fc7-410e-9139-8b5e3c5ea302",
+                            ConcurrencyStamp = "5fee4532-4e9d-440f-9c78-af69e49183e1",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@covid.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@covid.bg",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECfrlww9vN1GZ9K+sWvX3GJ1D0yOR0xArZ6Cqf4dadpg7VlqoBnJHLfFAewWmpYy0w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPc+QreQa2L9Uy0y+1zQTwN6hsiaeT640atiKIoHwSvss/Rq7ZROzrxAVnKLJ+3gGw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -199,14 +201,14 @@ namespace CovidCertificate.Migrations
                         new
                         {
                             Id = "AdminRoleId",
-                            ConcurrencyStamp = "3d160b82-07e1-471d-82ed-d1eb6e2ea9f1",
+                            ConcurrencyStamp = "bedf7acf-a4ed-4d29-9140-b90cac6d537e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "UserRoleId",
-                            ConcurrencyStamp = "182c3666-d335-4232-b8e1-766362d9ee75",
+                            ConcurrencyStamp = "610a3501-f8c1-455d-b8b6-9944cf51cf8b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -330,8 +332,8 @@ namespace CovidCertificate.Migrations
             modelBuilder.Entity("CovidCertificate.Data.Models.Certificate", b =>
                 {
                     b.HasOne("CovidCertificate.Data.Models.User", "User")
-                        .WithMany("Certificates")
-                        .HasForeignKey("UserId");
+                        .WithOne("Certificate")
+                        .HasForeignKey("CovidCertificate.Data.Models.Certificate", "UserId");
 
                     b.Navigation("User");
                 });
@@ -403,7 +405,7 @@ namespace CovidCertificate.Migrations
 
             modelBuilder.Entity("CovidCertificate.Data.Models.User", b =>
                 {
-                    b.Navigation("Certificates");
+                    b.Navigation("Certificate");
                 });
 #pragma warning restore 612, 618
         }

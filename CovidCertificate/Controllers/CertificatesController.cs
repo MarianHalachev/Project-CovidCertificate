@@ -27,6 +27,7 @@ namespace CovidCertificate.Controllers
             _context = context;
         }
 
+
         public IActionResult NotAvailable()
         {
             return this.View();

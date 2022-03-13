@@ -19,7 +19,13 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Certificate>()
+                .HasOne(c => c.User)
+                .WithOne(u => u.Certificate)
+                .HasForeignKey<Certificate>(c => c.UserId);
             var hasher = new PasswordHasher<IdentityUser>();
+
+
 
             builder.Entity<IdentityRole>(option =>
             {

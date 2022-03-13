@@ -21,8 +21,6 @@ namespace CovidCertificate.Controllers
 
         private readonly ApplicationDbContext _context;
 
-       
-
 
 
         public SchoolsController(ICovidService covidService, UserManager<User> userManager,
@@ -33,9 +31,13 @@ namespace CovidCertificate.Controllers
             _context = context;
         }
 
+
       
         public async Task<IActionResult> Index()
         {
+            var users = _context.Users
+                .Join(_context.Certificate, u => u.Id, c => c.UserId, (user, certificate) => user)
+                .ToList();
             return View(await _context.School.ToListAsync());
         }
 

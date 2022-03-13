@@ -184,10 +184,10 @@ namespace CovidCertificate.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DateOfIssue = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ValidMonths = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ValidMonths = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,17 +203,17 @@ namespace CovidCertificate.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "AdminRoleId", "3d160b82-07e1-471d-82ed-d1eb6e2ea9f1", "Admin", "ADMIN" });
+                values: new object[] { "AdminRoleId", "bedf7acf-a4ed-4d29-9140-b90cac6d537e", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "UserRoleId", "182c3666-d335-4232-b8e1-766362d9ee75", "User", "USER" });
+                values: new object[] { "UserRoleId", "610a3501-f8c1-455d-b8b6-9944cf51cf8b", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SchoolId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "adminId", 0, "f7c717b6-5fc7-410e-9139-8b5e3c5ea302", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@covid.bg", true, null, null, false, null, null, "admin@covid.bg", "ADMIN", "AQAAAAEAACcQAAAAECfrlww9vN1GZ9K+sWvX3GJ1D0yOR0xArZ6Cqf4dadpg7VlqoBnJHLfFAewWmpYy0w==", null, false, null, "", false, "admin" });
+                values: new object[] { "adminId", 0, "5fee4532-4e9d-440f-9c78-af69e49183e1", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@covid.bg", true, null, null, false, null, null, "admin@covid.bg", "ADMIN", "AQAAAAEAACcQAAAAEPc+QreQa2L9Uy0y+1zQTwN6hsiaeT640atiKIoHwSvss/Rq7ZROzrxAVnKLJ+3gGw==", null, false, null, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -267,7 +267,9 @@ namespace CovidCertificate.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Certificate_UserId",
                 table: "Certificate",
-                column: "UserId");
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

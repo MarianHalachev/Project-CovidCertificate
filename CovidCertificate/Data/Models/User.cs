@@ -10,7 +10,7 @@ namespace CovidCertificate.Data.Models
     {
         public User()
         {
-            this.Certificates = new List<Certificate>();
+          
         }
         public string FirstName { get; set; }
 
@@ -19,7 +19,7 @@ namespace CovidCertificate.Data.Models
         public string LastName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
-        public ICollection<Certificate> Certificates { get; set; }
+        public Certificate Certificate { get; set; }
         public School School { get; set; }
     }
 }
