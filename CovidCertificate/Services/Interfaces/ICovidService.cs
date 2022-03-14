@@ -9,7 +9,7 @@ namespace CovidCertificate.Services.Interfaces
     public interface ICovidService
     {
         void CheckCertificate(DateTime dateofIssue,DateTime endDate, int validMonths,int id);
-        void CreateCertificate(DateTime dateofIssue,DateTime endDate,int validMonths);
+        void CreateCertificate(DateTime dateofIssue,DateTime endDate,int validMonths, string userId);
         List<Certificate> GetAllCertificates();
 
         Certificate GetCertificateById(int id);

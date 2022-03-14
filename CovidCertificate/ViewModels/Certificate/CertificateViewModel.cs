@@ -7,10 +7,9 @@ namespace CovidCertificate.ViewModels.Certificate
 {
     public class CertificateViewModel
     {
-        public int Count { get; set; }
-
-        public int Rows => this.Count % 5;
-
-        public IEnumerable<DisplayViewModel> Certificates { get; set; }
+        public string FullName { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+        public bool IsValid { get; set; }
     }
 }

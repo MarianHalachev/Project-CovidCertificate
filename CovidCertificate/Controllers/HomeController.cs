@@ -23,7 +23,7 @@ namespace CovidCertificate.Controllers
         public IActionResult Index()
         {
             var certificates = this.covidService.GetAllCertificates();
-            var displayCertificates = new CertificateViewModel
+            var displayCertificates = new OldCertificateViewModel
             {
                 Count = certificates.Count,
                 Certificates = this.ExtractDisplayCertificates(certificates)

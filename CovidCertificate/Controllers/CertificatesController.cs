@@ -20,11 +20,28 @@ namespace CovidCertificate.Controllers
         private readonly UserManager<User> userManager;
         private readonly ApplicationDbContext _context;
 
-        public CertificatesController(ICovidService covidService, UserManager<User> userManager,ApplicationDbContext context)
+        public CertificatesController(ICovidService covidService, UserManager<User> userManager, ApplicationDbContext context)
         {
             this.covidService = covidService;
             this.userManager = userManager;
             _context = context;
+        }
+
+        public async Task<IActionResult> NotAvailableList()
+        {
+            User user = await userManager.GetUserAsync(this.User);
+            NotAvailableCertificatesViewModel model = new NotAvailableCertificatesViewModel();
+            model.Count = _context.Certificate.Where(x => x.DateOfIssue.AddMonths(x.ValidMonths) < DateTime.Now).Count();
+            model.Certificates = _context.Certificate
+                .Where(x => x.User.School.CodeByAdmin == user.School.CodeByAdmin && x.DateOfIssue.AddMonths(x.ValidMonths) < DateTime.Now)
+                .Select(x => new CertificateViewModel()
+                {
+                    FullName = x.User.FirstName + x.User.LastName,
+                    StartDate = x.DateOfIssue.ToShortDateString(),
+                    EndDate = x.DateOfIssue.AddMonths(x.ValidMonths).ToShortDateString()
+                })
+                .ToList();
+            return this.View(model);
         }
 
 
@@ -38,7 +55,7 @@ namespace CovidCertificate.Controllers
             return this.View();
         }
 
-        public IActionResult Check(DateTime dateofIssue,DateTime endDate, int validMonths, int id) 
+        public IActionResult Check(DateTime dateofIssue, DateTime endDate, int validMonths, int id)
         {
             var certificate = this.covidService.GetCertificateById(id);
             var model = new DetailsViewModel()
@@ -49,7 +66,7 @@ namespace CovidCertificate.Controllers
                 ValidMonths = certificate.ValidMonths,
                 User = certificate.User
             };
-            if (certificate.EndDate>DateTime.UtcNow)
+            if (certificate.EndDate > DateTime.UtcNow)
             {
 
                 return RedirectToAction("Available", "Certificates");
@@ -57,7 +74,7 @@ namespace CovidCertificate.Controllers
             else
             {
                 return RedirectToAction("NotAvailable", "Certificates");
-            }      
+            }
         }
 
         public async Task<IActionResult> Index()
@@ -74,9 +91,11 @@ namespace CovidCertificate.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin,User")]
-        public IActionResult Create(CreateViewModel model)
+        public async Task<IActionResult> Create(CreateViewModel model)
         {
-            this.covidService.CreateCertificate(model.DateOfIssue,model.EndDate, model.ValidMonths);
+            User applicationUser = await userManager.GetUserAsync(User);
+
+            this.covidService.CreateCertificate(model.DateOfIssue, model.EndDate, model.ValidMonths, applicationUser.Id);
             return this.RedirectToAction("Index", "Home");
         }
 
@@ -116,11 +135,11 @@ namespace CovidCertificate.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(DetailsViewModel model)
         {
-            this.covidService.EditCertificate(model.Id,model.DateOfIssue ,model.EndDate, model.ValidMonths);
+            this.covidService.EditCertificate(model.Id, model.DateOfIssue, model.EndDate, model.ValidMonths);
             return this.RedirectToAction("Index", "Home");
         }
 
-        
+
 
         [Authorize(Roles = "Admin")]
         // GET: Certificates/Delete/5

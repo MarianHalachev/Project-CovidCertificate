@@ -40,9 +40,7 @@ namespace CovidCertificate.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Certificate");
                 });
@@ -154,14 +152,14 @@ namespace CovidCertificate.Migrations
                         {
                             Id = "adminId",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5fee4532-4e9d-440f-9c78-af69e49183e1",
+                            ConcurrencyStamp = "c156191f-3154-46cb-923a-e8f9bc3335d3",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@covid.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@covid.bg",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPc+QreQa2L9Uy0y+1zQTwN6hsiaeT640atiKIoHwSvss/Rq7ZROzrxAVnKLJ+3gGw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFT41zcqnqwIQZ42W7qTY1UzxW7zDlZy7M0LtvbiYOdPoNvZZenPe5luMX80z9yZGQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -199,14 +197,14 @@ namespace CovidCertificate.Migrations
                         new
                         {
                             Id = "AdminRoleId",
-                            ConcurrencyStamp = "bedf7acf-a4ed-4d29-9140-b90cac6d537e",
+                            ConcurrencyStamp = "ace920f9-1958-4cf6-a533-da2412637bee",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "UserRoleId",
-                            ConcurrencyStamp = "610a3501-f8c1-455d-b8b6-9944cf51cf8b",
+                            ConcurrencyStamp = "75c510c5-aecc-463c-99e4-03a1e59b238d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -330,8 +328,8 @@ namespace CovidCertificate.Migrations
             modelBuilder.Entity("CovidCertificate.Data.Models.Certificate", b =>
                 {
                     b.HasOne("CovidCertificate.Data.Models.User", "User")
-                        .WithOne("Certificate")
-                        .HasForeignKey("CovidCertificate.Data.Models.Certificate", "UserId");
+                        .WithMany("Certificate")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

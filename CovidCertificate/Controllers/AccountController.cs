@@ -38,13 +38,19 @@ namespace CovidCertificate.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            School school = context.School.FirstOrDefault(x => x.CodeByAdmin == model.AdminCode);
+            if (school==null)
+            {
+                return this.View(model);
+            }
             var user = new User
             {
                 UserName = model.Username,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                School=school
             };
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)

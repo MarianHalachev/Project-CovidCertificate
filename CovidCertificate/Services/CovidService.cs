@@ -23,13 +23,14 @@ namespace CovidCertificate.Services
             throw new NotImplementedException();
         }
 
-        public void CreateCertificate(DateTime dateofIssue,DateTime endDate, int validMonths)
+        public void CreateCertificate(DateTime dateofIssue,DateTime endDate, int validMonths, string  userId)
         {
             var certificate = new Certificate
             {
                 DateOfIssue = dateofIssue,
                 EndDate = endDate,
-                ValidMonths = validMonths
+                ValidMonths = validMonths,
+                UserId=userId
             };
 
             this.context.Certificate.Add(certificate);

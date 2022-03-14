@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CovidCertificate.Data.Models
 {
-    public class User:IdentityUser
+    public class User : IdentityUser
     {
         public User()
         {
-          
+
         }
         public string FirstName { get; set; }
 
@@ -19,7 +19,7 @@ namespace CovidCertificate.Data.Models
         public string LastName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
-        public Certificate Certificate { get; set; }
-        public School School { get; set; }
+        public virtual ICollection<Certificate> Certificate { get; set; }
+        public virtual School School { get; set; }
     }
 }

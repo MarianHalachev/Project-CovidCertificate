@@ -14,15 +14,18 @@
             : base(options)
         {
         }
-        public DbSet<CovidCertificate.Data.Models.School> School { get; set; }
-        public DbSet<CovidCertificate.Data.Models.Certificate> Certificate { get; set; }
+        public virtual DbSet<CovidCertificate.Data.Models.School> School { get; set; }
+        public virtual DbSet<CovidCertificate.Data.Models.Certificate> Certificate { get; set; }
 
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+            base.OnConfiguring(optionsBuilder);
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Certificate>()
-                .HasOne(c => c.User)
-                .WithOne(u => u.Certificate)
-                .HasForeignKey<Certificate>(c => c.UserId);
+            
             var hasher = new PasswordHasher<IdentityUser>();
 
 
