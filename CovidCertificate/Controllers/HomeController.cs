@@ -46,9 +46,7 @@ namespace CovidCertificate.Controllers
                 {
                     Id= certificate.Id,
                     DateOfIssue = certificate.DateOfIssue,
-                    EndDate = certificate.EndDate,
                     ValidMonths=certificate.ValidMonths,
-       
                 };
 
                 list.Add(model);

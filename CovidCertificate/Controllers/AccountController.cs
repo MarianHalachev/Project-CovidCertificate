@@ -39,9 +39,9 @@ namespace CovidCertificate.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             School school = context.School.FirstOrDefault(x => x.CodeByAdmin == model.AdminCode);
-            if (school==null)
+            if (school == null || !school.IsConfirmed)
             {
-                return this.View(model);
+                return this.RedirectToAction("SchoolNotFound", "Account");
             }
             var user = new User
             {
@@ -50,33 +50,48 @@ namespace CovidCertificate.Controllers
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
                 LastName = model.LastName,
-                School=school
+                SchoolId = school.Id
             };
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                var roleResult = await this.signInManager.UserManager.AddToRoleAsync(user, "User");
-                if (roleResult.Errors.Any())
+                if (model.Username.ToLower() == "teacher")
                 {
-                    return this.RedirectToAction("Index", "Home");
+                    var roleResult = await this.signInManager.UserManager.AddToRoleAsync(user, "Teacher");
+                    if (roleResult.Errors.Any())
+                    {
+                        return this.RedirectToAction("Index", "Home");
+                    }
                 }
+                else if (model.Username.ToLower() == "student")
+                {
+                    var roleResult = await this.signInManager.UserManager.AddToRoleAsync(user, "Student");
+                    if (roleResult.Errors.Any())
+                    {
+                        return this.RedirectToAction("Index", "Home");
+                    }
+                }
+
             }
             else
             {
                 return this.View(model);
             }
             await this.signInManager.SignInAsync(user, isPersistent: false);
-            return this.RedirectToAction("Index", "Home"); 
+            return this.RedirectToAction("Index", "Home");
+        }
+        public IActionResult SchoolNotFound()
+        {
+            return this.View();
         }
         public IActionResult Login()
         {
             return this.View();
         }
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var user = this.userManager.Users.FirstOrDefault(u => u.UserName == model.Username);
-            var result = this.signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: true).Result;
+            var result = await this.signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: true);
             if (result.Succeeded)
             {
                 return this.RedirectToAction("Index", "Home");

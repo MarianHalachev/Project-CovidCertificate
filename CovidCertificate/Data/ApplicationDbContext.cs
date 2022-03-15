@@ -4,9 +4,6 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
     {
@@ -25,28 +22,52 @@
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            
+
             var hasher = new PasswordHasher<IdentityUser>();
 
-
+            builder.Entity<School>(option =>
+            {
+                option.HasOne<User>(s => s.Admin)
+                   .WithOne(ad => ad.School)
+                   .HasForeignKey<School>(ad => ad.AdminId);
+            });
 
             builder.Entity<IdentityRole>(option =>
             {
-                option.HasData(
-                    new IdentityRole() { Id="AdminRoleId",Name= "Admin",NormalizedName="ADMIN" }
-                    );
-                option.HasData(
-                    new IdentityRole() { Id = "UserRoleId", Name = "User",NormalizedName="USER" }
-                    );
-            } );
-            builder.Entity<User>(option => {
+                option.HasData(new IdentityRole()
+                {
+                    Id = "AdminRoleId",
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                });
+                option.HasData(new IdentityRole()
+                {
+                    Id = "SchoolAdminRoleId",
+                    Name = "SchoolAdmin",
+                    NormalizedName = "SCHOOLADMIN"
+                });
+                option.HasData(new IdentityRole()
+                {
+                    Id = "TeacherRoleId",
+                    Name = "Teacher",
+                    NormalizedName = "Teacher"
+                });
+                option.HasData(new IdentityRole()
+                {
+                    Id = "StudentRoleId",
+                    Name = "Student",
+                    NormalizedName = "STUDENT"
+                });
+            });
+            builder.Entity<User>(option =>
+            {
 
                 option.HasData(new User()
                 {
                     Id = "adminId",
                     UserName = "admin",
                     NormalizedUserName = "ADMIN",
-                    PasswordHash = hasher.HashPassword(null,"admin"),
+                    PasswordHash = hasher.HashPassword(null, "admin"),
                     Email = "admin@covid.bg",
                     NormalizedEmail = "admin@covid.bg",
                     EmailConfirmed = true,

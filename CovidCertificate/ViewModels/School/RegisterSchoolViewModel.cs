@@ -1,11 +1,12 @@
-﻿namespace CovidCertificate.ViewModels.Account
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace CovidCertificate.ViewModels.School
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Threading.Tasks;
-    public class RegisterViewModel
+    public class RegisterSchoolViewModel
     {
         [Required]
         [DataType(DataType.Text)]
@@ -28,11 +29,6 @@
         public string LastName { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "School Admin Code")]
-        public string AdminCode { get; set; }
-
-        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be a least {2} and at max {1} characters long. ", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -47,8 +43,17 @@
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+       
+        [Required]
+        [Display(Name = "School name")]
+        public string SchoolName { get; set; }
 
-        public string Role { get; set; }
+        [Required]
+        [Display(Name = "Admin code")]
+        public string CodeByAdmin { get; set; }
 
+        [Required]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
     }
 }

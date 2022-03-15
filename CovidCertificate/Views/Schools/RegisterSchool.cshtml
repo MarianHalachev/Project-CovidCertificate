@@ -1,7 +1,7 @@
-﻿@model CovidCertificate.ViewModels.Account.RegisterViewModel
+﻿@model CovidCertificate.ViewModels.School.RegisterSchoolViewModel
 
 @{
-    ViewData["Title"] = "Register user";
+    ViewData["Title"] = "Register school";
 }
 
 <section class="h-100 h-custom" style="background-color: white;">
@@ -10,8 +10,8 @@
             <div class="col-lg-8 col-xl-6">
                 <div class="card rounded-3" style="background-color:whitesmoke">
                     <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration user</h3>
-                        <form class="mx-auto half-width" method="post" asp-controller="Account" asp-action="Register">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration school</h3>
+                        <form class="mx-auto half-width" method="post" asp-controller="Schools" asp-action="RegisterSchool">
                             <div class="form-group">
                                 <label asp-for="Username"></label>
                                 <input asp-for="Username" class="form-control" placeholder="Username..." />
@@ -29,10 +29,6 @@
                                 <input asp-for="LastName" class="form-control" placeholder="LastName..." />
                             </div>
                             <div class="form-group">
-                                <label asp-for="AdminCode"></label>
-                                <input asp-for="AdminCode" class="form-control" placeholder="Admin code" />
-                            </div>
-                            <div class="form-group">
                                 <label asp-for="Password"></label>
                                 <input asp-for="Password" class="form-control" placeholder="Password..." />
                             </div>
@@ -45,17 +41,20 @@
                                 <label asp-for="Email"></label>
                                 <input asp-for="Email" class="form-control" placeholder="Email..." />
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="role" value="student" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    Student
-                                </label>
+                            <div class="form-group">
+                                <label asp-for="SchoolName" class="control-label"></label>
+                                <input asp-for="SchoolName" class="form-control" />
+                                <span asp-validation-for="SchoolName" class="text-danger"></span>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="role" value="teacher" id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    Teacher
-                                </label>
+                            <div class="form-group">
+                                <label asp-for="CodeByAdmin" class="control-label"></label>
+                                <input asp-for="CodeByAdmin" class="form-control" />
+                                <span asp-validation-for="CodeByAdmin" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address" class="control-label"></label>
+                                <input asp-for="Address" class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
                             </div>
                             <div class="button-holder d-flex justify-content-center">
                                 <button type="submit" class="btn btn-dark">Register</button>

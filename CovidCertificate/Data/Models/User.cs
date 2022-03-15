@@ -8,18 +8,13 @@ namespace CovidCertificate.Data.Models
 {
     public class User : IdentityUser
     {
-        public User()
-        {
-
-        }
         public string FirstName { get; set; }
-
         public string MiddleName { get; set; }
-
         public string LastName { get; set; }
-
         public DateTime DateOfBirth { get; set; }
-        public virtual ICollection<Certificate> Certificate { get; set; }
+        public int? SchoolId { get; set; }
         public virtual School School { get; set; }
+        public virtual ICollection<Certificate> Certificate { get; set; } = new HashSet<Certificate>();
+        public virtual ICollection<IdentityRole> Roles { get; set; } = new HashSet<IdentityRole>();
     }
 }

@@ -1,4 +1,4 @@
-﻿@model CovidCertificate.ViewModels.School.DetailsViewModel
+﻿@model CovidCertificate.Data.Models.School
 
 @{
     ViewData["Title"] = "Details";
@@ -17,6 +17,12 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Admin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Admin.Id)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.CodeByAdmin)
         </dt>
         <dd>
@@ -27,6 +33,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsConfirmed)
         </dd>
     </dl>
 </div>

@@ -18,17 +18,12 @@ namespace CovidCertificate.Services
             this.context = context;
         }
 
-        public void CheckCertificate(DateTime dateofIssue,DateTime endDate,int validMonths, int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void CreateCertificate(DateTime dateofIssue,DateTime endDate, int validMonths, string  userId)
+        public void CreateCertificate(DateTime dateofIssue, int validMonths, string  userId)
         {
             var certificate = new Certificate
             {
                 DateOfIssue = dateofIssue,
-                EndDate = endDate,
                 ValidMonths = validMonths,
                 UserId=userId
             };
@@ -43,12 +38,11 @@ namespace CovidCertificate.Services
             this.context.SaveChanges();
         }
 
-        public void EditCertificate(int certificateId, DateTime dateofIssue,DateTime endDate, int validMonths)
+        public void EditCertificate(int certificateId, DateTime dateofIssue, int validMonths)
         {
             var certificate = this.context.Certificate.FirstOrDefault(p => p.Id == certificateId);
 
             certificate.DateOfIssue=dateofIssue;
-            certificate.EndDate = endDate;
             certificate.ValidMonths = validMonths;
 
             this.context.SaveChanges();
@@ -57,7 +51,6 @@ namespace CovidCertificate.Services
         public List<Certificate> GetAllCertificates()
         {
             var certificate = this.context.Certificate.
-            Include(o => o.User).
             ToList();
             return certificate;
         }

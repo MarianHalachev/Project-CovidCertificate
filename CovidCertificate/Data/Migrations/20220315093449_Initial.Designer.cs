@@ -4,14 +4,16 @@ using CovidCertificate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CovidCertificate.Migrations
+namespace CovidCertificate.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220315093449_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +29,6 @@ namespace CovidCertificate.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateOfIssue")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
@@ -55,13 +54,23 @@ namespace CovidCertificate.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CodeByAdmin")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdminId")
+                        .IsUnique()
+                        .HasFilter("[AdminId] IS NOT NULL");
 
                     b.ToTable("School");
                 });
@@ -152,14 +161,14 @@ namespace CovidCertificate.Migrations
                         {
                             Id = "adminId",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c156191f-3154-46cb-923a-e8f9bc3335d3",
+                            ConcurrencyStamp = "34d521da-16b0-49eb-9b5d-aa0fce90c93e",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@covid.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@covid.bg",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFT41zcqnqwIQZ42W7qTY1UzxW7zDlZy7M0LtvbiYOdPoNvZZenPe5luMX80z9yZGQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFs+zf2cpQejXsyvtx76T7uPybiJrev3KSE5hKsQ0ojV1It86r6fOCURBfKd2IoKTw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -197,16 +206,30 @@ namespace CovidCertificate.Migrations
                         new
                         {
                             Id = "AdminRoleId",
-                            ConcurrencyStamp = "ace920f9-1958-4cf6-a533-da2412637bee",
+                            ConcurrencyStamp = "62ef7897-85e0-4d74-905f-7ec3a364899c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "UserRoleId",
-                            ConcurrencyStamp = "75c510c5-aecc-463c-99e4-03a1e59b238d",
-                            Name = "User",
-                            NormalizedName = "USER"
+                            Id = "SchoolAdminRoleId",
+                            ConcurrencyStamp = "b42086f6-9010-48e9-8475-308c55cc4a5b",
+                            Name = "SchoolAdmin",
+                            NormalizedName = "SCHOOLADMIN"
+                        },
+                        new
+                        {
+                            Id = "TeacherRoleId",
+                            ConcurrencyStamp = "e06ba9eb-031b-460e-9d85-669357de579f",
+                            Name = "Teacher",
+                            NormalizedName = "Teacher"
+                        },
+                        new
+                        {
+                            Id = "StudentRoleId",
+                            ConcurrencyStamp = "20fdfbca-7753-48bc-914f-23732fdb0b38",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
                         });
                 });
 
@@ -334,13 +357,20 @@ namespace CovidCertificate.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CovidCertificate.Data.Models.School", b =>
+                {
+                    b.HasOne("CovidCertificate.Data.Models.User", "Admin")
+                        .WithOne("School")
+                        .HasForeignKey("CovidCertificate.Data.Models.School", "AdminId");
+
+                    b.Navigation("Admin");
+                });
+
             modelBuilder.Entity("CovidCertificate.Data.Models.User", b =>
                 {
-                    b.HasOne("CovidCertificate.Data.Models.School", "School")
+                    b.HasOne("CovidCertificate.Data.Models.School", null)
                         .WithMany("Users")
                         .HasForeignKey("SchoolId");
-
-                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -402,6 +432,8 @@ namespace CovidCertificate.Migrations
             modelBuilder.Entity("CovidCertificate.Data.Models.User", b =>
                 {
                     b.Navigation("Certificate");
+
+                    b.Navigation("School");
                 });
 #pragma warning restore 612, 618
         }
