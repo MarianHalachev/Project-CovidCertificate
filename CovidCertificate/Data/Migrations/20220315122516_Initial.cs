@@ -176,16 +176,16 @@ namespace CovidCertificate.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "AdminRoleId", "62ef7897-85e0-4d74-905f-7ec3a364899c", "Admin", "ADMIN" },
-                    { "SchoolAdminRoleId", "b42086f6-9010-48e9-8475-308c55cc4a5b", "SchoolAdmin", "SCHOOLADMIN" },
-                    { "TeacherRoleId", "e06ba9eb-031b-460e-9d85-669357de579f", "Teacher", "Teacher" },
-                    { "StudentRoleId", "20fdfbca-7753-48bc-914f-23732fdb0b38", "Student", "STUDENT" }
+                    { "AdminRoleId", "b25d2be1-31c4-4bcc-a4a7-c5d78745c1f5", "Admin", "ADMIN" },
+                    { "SchoolAdminRoleId", "6be03eb2-d327-4f6a-a947-8b7e12ede507", "SchoolAdmin", "SCHOOLADMIN" },
+                    { "TeacherRoleId", "d5de2aba-c328-4237-8627-dccb326f04ca", "Teacher", "Teacher" },
+                    { "StudentRoleId", "7eaff142-6a45-43db-9445-52deead302c1", "Student", "STUDENT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SchoolId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "adminId", 0, "34d521da-16b0-49eb-9b5d-aa0fce90c93e", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@covid.bg", true, null, null, false, null, null, "admin@covid.bg", "ADMIN", "AQAAAAEAACcQAAAAEFs+zf2cpQejXsyvtx76T7uPybiJrev3KSE5hKsQ0ojV1It86r6fOCURBfKd2IoKTw==", null, false, null, "", false, "admin" });
+                values: new object[] { "adminId", 0, "a945d12f-5bb6-4b5f-94d1-4653af0e0534", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@covid.bg", true, null, null, false, null, null, "admin@covid.bg", "ADMIN", "AQAAAAEAACcQAAAAEHsQB6+MNr8sUALxvPxlmgEwbeEAs33IeY15vE1KO2c7SwwL2Z+0FXSAQIqfzYX5cA==", null, false, null, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

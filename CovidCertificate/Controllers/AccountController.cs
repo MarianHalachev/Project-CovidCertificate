@@ -14,9 +14,9 @@ namespace CovidCertificate.Controllers
     {
         private readonly ApplicationDbContext context;
         private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<IdentityRole<string>> roleManager;
         private readonly SignInManager<User> signInManager;
-        public AccountController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
+        public AccountController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole<string>> roleManager, SignInManager<User> signInManager)
         {
             this.context = context;
             this.userManager = userManager;
@@ -26,7 +26,7 @@ namespace CovidCertificate.Controllers
 
         public async Task<IActionResult> CreateRole()
         {
-            var result = await roleManager.CreateAsync(new IdentityRole("User"));
+            var result = await roleManager.CreateAsync(new IdentityRole<string>("User"));
             return RedirectToAction("Index", "Home");
 
         }
@@ -55,7 +55,7 @@ namespace CovidCertificate.Controllers
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                if (model.Username.ToLower() == "teacher")
+                if (model.Role.ToLower() == "teacher")
                 {
                     var roleResult = await this.signInManager.UserManager.AddToRoleAsync(user, "Teacher");
                     if (roleResult.Errors.Any())
@@ -63,7 +63,7 @@ namespace CovidCertificate.Controllers
                         return this.RedirectToAction("Index", "Home");
                     }
                 }
-                else if (model.Username.ToLower() == "student")
+                else if (model.Role.ToLower() == "student")
                 {
                     var roleResult = await this.signInManager.UserManager.AddToRoleAsync(user, "Student");
                     if (roleResult.Errors.Any())

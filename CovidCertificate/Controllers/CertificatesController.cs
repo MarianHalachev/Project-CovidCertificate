@@ -58,18 +58,19 @@ namespace CovidCertificate.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Certificate.ToListAsync());
+            User user = await userManager.GetUserAsync(this.User);
+            return View(await _context.Certificate.Where(x=>x.UserId==user.Id).ToListAsync());
         }
 
 
-        [Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,Student,Teacher")]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,Student,Teacher")]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
             User applicationUser = await userManager.GetUserAsync(User);
@@ -78,7 +79,7 @@ namespace CovidCertificate.Controllers
             return this.RedirectToAction("Index", "Home");
         }
 
-        [Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,Student,Teacher")]
         public IActionResult Details(int id)
         {
             var certificate = this.covidService.GetCertificateById(id);

@@ -11,17 +11,17 @@ namespace CovidCertificate.Common
     {
         public static void Seed(IServiceProvider serviceProvider)
         {
-            var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
+            var roleManager = serviceProvider.GetService<RoleManager<IdentityRole<string>>>();
             var adminRoleExists = roleManager.RoleExistsAsync("Admin").Result;
             var userRoleExists = roleManager.RoleExistsAsync("User").Result;
             if (!adminRoleExists)
             {
-                roleManager.CreateAsync(new IdentityRole("Admin"));
+                roleManager.CreateAsync(new IdentityRole<string>("Admin"));
             }
 
             if (!userRoleExists)
             {
-                roleManager.CreateAsync(new IdentityRole("User"));
+                roleManager.CreateAsync(new IdentityRole<string>("User"));
             }
         }
     }

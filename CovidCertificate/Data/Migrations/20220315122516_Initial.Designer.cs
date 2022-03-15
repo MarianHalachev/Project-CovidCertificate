@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CovidCertificate.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220315093449_Initial")]
+    [Migration("20220315122516_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,14 +161,14 @@ namespace CovidCertificate.Data.Migrations
                         {
                             Id = "adminId",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "34d521da-16b0-49eb-9b5d-aa0fce90c93e",
+                            ConcurrencyStamp = "a945d12f-5bb6-4b5f-94d1-4653af0e0534",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@covid.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@covid.bg",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFs+zf2cpQejXsyvtx76T7uPybiJrev3KSE5hKsQ0ojV1It86r6fOCURBfKd2IoKTw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHsQB6+MNr8sUALxvPxlmgEwbeEAs33IeY15vE1KO2c7SwwL2Z+0FXSAQIqfzYX5cA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -176,7 +176,7 @@ namespace CovidCertificate.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -206,28 +206,28 @@ namespace CovidCertificate.Data.Migrations
                         new
                         {
                             Id = "AdminRoleId",
-                            ConcurrencyStamp = "62ef7897-85e0-4d74-905f-7ec3a364899c",
+                            ConcurrencyStamp = "b25d2be1-31c4-4bcc-a4a7-c5d78745c1f5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "SchoolAdminRoleId",
-                            ConcurrencyStamp = "b42086f6-9010-48e9-8475-308c55cc4a5b",
+                            ConcurrencyStamp = "6be03eb2-d327-4f6a-a947-8b7e12ede507",
                             Name = "SchoolAdmin",
                             NormalizedName = "SCHOOLADMIN"
                         },
                         new
                         {
                             Id = "TeacherRoleId",
-                            ConcurrencyStamp = "e06ba9eb-031b-460e-9d85-669357de579f",
+                            ConcurrencyStamp = "d5de2aba-c328-4237-8627-dccb326f04ca",
                             Name = "Teacher",
                             NormalizedName = "Teacher"
                         },
                         new
                         {
                             Id = "StudentRoleId",
-                            ConcurrencyStamp = "20fdfbca-7753-48bc-914f-23732fdb0b38",
+                            ConcurrencyStamp = "7eaff142-6a45-43db-9445-52deead302c1",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -375,7 +375,7 @@ namespace CovidCertificate.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -402,7 +402,7 @@ namespace CovidCertificate.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

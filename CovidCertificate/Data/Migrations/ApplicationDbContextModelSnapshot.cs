@@ -159,14 +159,14 @@ namespace CovidCertificate.Data.Migrations
                         {
                             Id = "adminId",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0eeb3aa4-cdc7-4fcf-92ed-38feec3c0a12",
+                            ConcurrencyStamp = "a945d12f-5bb6-4b5f-94d1-4653af0e0534",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@covid.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@covid.bg",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKtLLe3gY9Itdaj2Fsu/cgzNL/I+dpSEdevzQYO8WmJo3t/XHkpiHk+nNoaeGBWpLQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHsQB6+MNr8sUALxvPxlmgEwbeEAs33IeY15vE1KO2c7SwwL2Z+0FXSAQIqfzYX5cA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -174,7 +174,7 @@ namespace CovidCertificate.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -191,9 +191,6 @@ namespace CovidCertificate.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
@@ -201,36 +198,34 @@ namespace CovidCertificate.Data.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
                         new
                         {
                             Id = "AdminRoleId",
-                            ConcurrencyStamp = "5d933833-cd01-41cf-adf4-2c33371711fc",
+                            ConcurrencyStamp = "b25d2be1-31c4-4bcc-a4a7-c5d78745c1f5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "SchoolAdminRoleId",
-                            ConcurrencyStamp = "cd50a42d-c574-4afc-8267-7f11fc969e2a",
+                            ConcurrencyStamp = "6be03eb2-d327-4f6a-a947-8b7e12ede507",
                             Name = "SchoolAdmin",
                             NormalizedName = "SCHOOLADMIN"
                         },
                         new
                         {
                             Id = "TeacherRoleId",
-                            ConcurrencyStamp = "17d0845a-8a07-4422-a075-bf76f2ace5e7",
+                            ConcurrencyStamp = "d5de2aba-c328-4237-8627-dccb326f04ca",
                             Name = "Teacher",
                             NormalizedName = "Teacher"
                         },
                         new
                         {
                             Id = "StudentRoleId",
-                            ConcurrencyStamp = "71e806c1-d311-4e1c-84bb-7531615e3a89",
+                            ConcurrencyStamp = "7eaff142-6a45-43db-9445-52deead302c1",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -376,16 +371,9 @@ namespace CovidCertificate.Data.Migrations
                         .HasForeignKey("SchoolId");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.HasOne("CovidCertificate.Data.Models.User", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -412,7 +400,7 @@ namespace CovidCertificate.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -442,8 +430,6 @@ namespace CovidCertificate.Data.Migrations
             modelBuilder.Entity("CovidCertificate.Data.Models.User", b =>
                 {
                     b.Navigation("Certificate");
-
-                    b.Navigation("Roles");
 
                     b.Navigation("School");
                 });

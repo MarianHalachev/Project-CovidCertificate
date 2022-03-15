@@ -15,9 +15,9 @@ namespace CovidCertificate.Controllers
     {
         private readonly ApplicationDbContext context;
         private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<IdentityRole<string>> roleManager;
 
-        public SchoolAdminsController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public SchoolAdminsController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole<string>> roleManager)
         {
             this.context = context;
             this.userManager = userManager;
@@ -33,8 +33,10 @@ namespace CovidCertificate.Controllers
                 .Where(x => x.School.Id == schoolId).ToList()
                 .Where(x => !x.Certificate.Any(c => c.DateOfIssue.AddDays(7 - (int)DateTime.Now.DayOfWeek) < DateTime.Now)).Count();
 
+            var teachers = userManager.GetUsersInRoleAsync("Teacher").Result;
             model.Teachers = context.Users
-                .Where(x => x.School.Id == schoolId)
+                .Where(x => x.SchoolId ==schoolId).ToList()
+                .Where(x => teachers.Any(t => t.Id == x.Id))
                 .Select(x => new UserViewModel()
                 {
                     FullName = x.FirstName + " " + x.LastName,
@@ -42,8 +44,10 @@ namespace CovidCertificate.Controllers
                 })
                 .ToList();
 
+            var students = userManager.GetUsersInRoleAsync("Student").Result;
             model.Students = context.Users
-                 .Where(x => x.School.Id == schoolId && (x.Roles.Any(r => r.Name == "student")))
+                .Where(x => x.SchoolId == schoolId).ToList()
+                 .Where(x => students.Any(t => t.Id == x.Id))
                 .Select(x => new UserViewModel()
                 {
                     FullName = x.FirstName + " " + x.LastName,

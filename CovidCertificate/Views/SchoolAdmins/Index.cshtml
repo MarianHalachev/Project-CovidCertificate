@@ -1,16 +1,16 @@
 ﻿@model CovidCertificate.ViewModels.SchoolAdmins.SchoolAdminIndexViewModel
 
-<h1>Chool admin user list</h1>
+<h1>School admin user list</h1>
 
 <p>Invalid certificate: @Model.TotalTestsNextWeek</p>
-<h2>Chool admin teacher list</h2>
+<h2>Teacher list</h2>
 <table class="table table-bordered table-hover">
     @if (Model.Teachers.Any())
     {
         <thead>
             <tr>
                 <th>Full name</th>
-                <th>End Date</th>
+                <th>Has valid sertificate</th>
             </tr>
         </thead>
         <tbody>
@@ -24,8 +24,27 @@
         </tbody>
     }
 </table>
-<h2>Chool admin student list</h2>
+<h2>Student list</h2>
 
-
+<table class="table table-bordered table-hover">
+    @if (Model.Students.Any())
+    {
+        <thead>
+            <tr>
+                <th>Full name</th>
+               <th>Has valid sertificate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Teachers)
+            {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@(item.HasValidCertificate?"Yes":"No")</td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>
 
 

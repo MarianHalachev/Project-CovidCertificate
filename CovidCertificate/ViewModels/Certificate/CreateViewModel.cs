@@ -10,9 +10,7 @@ namespace CovidCertificate.ViewModels.Certificate
     {   [Required]
         [Display(Name ="DateOfIssue")]
         public DateTime DateOfIssue { get; set; }
-        [Required]
-        [Display(Name ="EndDate")]
-        public DateTime EndDate { get; set; }
+
         [Required]
         [Display(Name ="ValidMonths")]
         public int ValidMonths { get; set; }

@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
+    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<string>, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -32,27 +32,27 @@
                    .HasForeignKey<School>(ad => ad.AdminId);
             });
 
-            builder.Entity<IdentityRole>(option =>
+            builder.Entity<IdentityRole<string>>(option =>
             {
-                option.HasData(new IdentityRole()
+                option.HasData(new IdentityRole<string>()
                 {
                     Id = "AdminRoleId",
                     Name = "Admin",
                     NormalizedName = "ADMIN"
                 });
-                option.HasData(new IdentityRole()
+                option.HasData(new IdentityRole<string>()
                 {
                     Id = "SchoolAdminRoleId",
                     Name = "SchoolAdmin",
                     NormalizedName = "SCHOOLADMIN"
                 });
-                option.HasData(new IdentityRole()
+                option.HasData(new IdentityRole<string>()
                 {
                     Id = "TeacherRoleId",
                     Name = "Teacher",
                     NormalizedName = "Teacher"
                 });
-                option.HasData(new IdentityRole()
+                option.HasData(new IdentityRole<string>()
                 {
                     Id = "StudentRoleId",
                     Name = "Student",

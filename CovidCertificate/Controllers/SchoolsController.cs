@@ -17,9 +17,9 @@ namespace CovidCertificate.Controllers
         private readonly ApplicationDbContext context;
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<IdentityRole<string>> roleManager;
 
-        public SchoolsController(ApplicationDbContext context, SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public SchoolsController(ApplicationDbContext context, SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<IdentityRole<string>> roleManager)
         {
             this.context = context;
             this.signInManager = signInManager;
@@ -73,10 +73,12 @@ namespace CovidCertificate.Controllers
             }
             School school = new School()
             {
-                Name=model.SchoolName,
+                Name = model.SchoolName,
                 Address = model.Address,
                 CodeByAdmin = model.CodeByAdmin
             };
+            context.School.Add(school);
+            await context.SaveChangesAsync();
             var user = new User
             {
                 UserName = model.Username,
@@ -84,17 +86,23 @@ namespace CovidCertificate.Controllers
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
                 LastName = model.LastName,
-                SchoolId = school.Id
+                School = school
             };
-            school.Admin = user;
+
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-
+                school.Admin = user;
+                context.School.Update(school);
+                await context.SaveChangesAsync();
+                int schoolId = context.School.FirstOrDefault(x => x.CodeByAdmin == school.CodeByAdmin).Id;
+                user.SchoolId = schoolId;
+                context.Users.Update(user);
+                await context.SaveChangesAsync();
                 var roleResult = await this.signInManager.UserManager.AddToRoleAsync(user, "SchoolAdmin");
                 if (roleResult.Errors.Any())
                 {
-                    return this.RedirectToAction("RegisterSchool","Schools");
+                    return this.RedirectToAction("RegisterSchool", "Schools");
                 }
             }
             else

@@ -38,7 +38,6 @@ namespace CovidCertificate
             services.AddControllersWithViews();
             services.AddTransient<ICovidService, CovidService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -52,7 +51,7 @@ namespace CovidCertificate
             });
 
             services.AddDefaultIdentity<User>()
-           .AddRoles<IdentityRole>()
+           .AddRoles<IdentityRole<string>>()
            .AddEntityFrameworkStores<ApplicationDbContext>();
 
         }
