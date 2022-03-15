@@ -1,0 +1,22 @@
+﻿@model CovidCertificate.ViewModels.Certificate.NotAvailableCertificatesViewModel
+<p>Invalid certificate: @Model.Count</p>
+<table class="table table-bordered table-hover">
+    @if (Model.Certificates.Any())
+    {
+        <thead>
+            <tr>
+                <th>Full name</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Certificates)
+            {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@item.EndDate</td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>
