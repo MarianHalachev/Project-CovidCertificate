@@ -1,4 +1,5 @@
-﻿using CovidCertificate.Data.Models;
+﻿using CovidCertificate.Data;
+using CovidCertificate.Data.Models;
 using CovidCertificate.Models;
 using CovidCertificate.Services.Interfaces;
 using CovidCertificate.ViewModels.Certificate;
@@ -15,6 +16,7 @@ namespace CovidCertificate.Controllers
     public class HomeController : Controller
     {
         private readonly ICovidService covidService;
+
         public HomeController(ICovidService covidService)
         {
             this.covidService = covidService;

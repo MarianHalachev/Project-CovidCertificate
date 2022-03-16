@@ -37,6 +37,7 @@ namespace CovidCertificate
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
             services.AddTransient<ICovidService, CovidService>();
+            services.AddTransient<IDataSeeder, DataSeeder>();
 
 
             services.Configure<IdentityOptions>(options =>
@@ -63,6 +64,7 @@ namespace CovidCertificate
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                
             }
             else
             {
