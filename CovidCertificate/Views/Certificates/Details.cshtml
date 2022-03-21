@@ -2,10 +2,9 @@
 
 @{ ViewData["Title"] = "Details"; }
 
-<h2>Details</h2>
-
+<h2>Детайли</h2>
 <div>
-    <h4>Certificate</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -14,12 +13,7 @@
         <dd>
             @Html.DisplayFor(model => model.DateOfIssue)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
+        
         <dt>
             @Html.DisplayNameFor(model => model.ValidMonths)
         </dt>
@@ -29,6 +23,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Редакция</a> |
+    <a asp-action="Index">Връщане към списъка</a>
 </div>

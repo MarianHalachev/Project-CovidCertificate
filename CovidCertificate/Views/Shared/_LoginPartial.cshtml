@@ -9,43 +9,43 @@
         if (User.IsInRole("Student"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello student @User.Identity.Name!</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравейте, ученик @User.Identity.Name!</a>
             </li>
         }
         else if (User.IsInRole("Teacher"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello teacher @User.Identity.Name!</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравейте, учител @User.Identity.Name!</a>
             </li>
         }
         else if (User.IsInRole("SchoolAdmin"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello school admin @User.Identity.Name!</a>
+                <a class="nav-link text-dark"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравейте, училищен админ @User.Identity.Name!</a>
             </li>
         }
         else if (User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello admin @User.Identity.Name!</a>
+                <a class="nav-link text-dark"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравейте, админ @User.Identity.Name!</a>
             </li>
         }
 
 
         <li class="nav-item">
-            <a class="nav-link btn btn-link text-dark"asp-controller="Account" asp-action="Logout">Logout</a>
+            <a class="nav-link btn btn-link text-dark"asp-controller="Account" asp-action="Logout">Изход</a>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark"  asp-area="" asp-controller="Schools" asp-action="RegisterSchool">Register school</a>
+            <a class="nav-link text-dark"  asp-area="" asp-controller="Schools" asp-action="RegisterSchool">Регистрация на училище</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark"  asp-controller="Account" asp-action="Register">Register user account</a>
+            <a class="nav-link text-dark"  asp-controller="Account" asp-action="Register">Регистрация на потребител</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark"  asp-controller="Account" asp-action="Login">Login</a>
+            <a class="nav-link text-dark"  asp-controller="Account" asp-action="Login">Вход</a>
         </li>
 
     }

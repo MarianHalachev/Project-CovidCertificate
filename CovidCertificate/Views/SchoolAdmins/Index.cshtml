@@ -1,16 +1,16 @@
 ﻿@model CovidCertificate.ViewModels.SchoolAdmins.SchoolAdminIndexViewModel
 
-<h1>School admin user list</h1>
+<h1>Невалидни сертификати</h1>
 
 <p>Invalid certificate: @Model.TotalTestsNextWeek</p>
-<h2>Teacher list</h2>
+<h2>Учители:</h2>
 <table class="table table-bordered table-hover">
     @if (Model.Teachers.Any())
     {
         <thead>
             <tr>
-                <th>Full name</th>
-                <th>Has valid sertificate</th>
+                <th>Име:</th>
+                <th>Има валиден сертификат:</th>
             </tr>
         </thead>
         <tbody>
@@ -24,15 +24,15 @@
         </tbody>
     }
 </table>
-<h2>Student list</h2>
+<h2>Ученици:</h2>
 
 <table class="table table-bordered table-hover">
     @if (Model.Students.Any())
     {
         <thead>
             <tr>
-                <th>Full name</th>
-               <th>Has valid sertificate</th>
+                <th>Име:</th>
+               <th>Има валиден сертификат:</th>
             </tr>
         </thead>
         <tbody>

@@ -7,5 +7,6 @@ namespace CovidCertificate.Data
         Task Run();
         Task SeedSchoolAndSchoolAdmins();
         Task SeedSchoolStudents();
+        Task SeedSchoolTeachers();
     }
 }

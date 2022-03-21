@@ -20,6 +20,7 @@ namespace CovidCertificate.Data
 
         public async Task Run()
         {
+          await SeedSchoolTeachers();
           await  SeedSchoolAndSchoolAdmins();
           await  SeedSchoolStudents();
         }
@@ -93,7 +94,74 @@ namespace CovidCertificate.Data
             }
         }
 
+        public async Task SeedSchoolTeachers()
+        {
+            if (userManager.GetUsersInRoleAsync("teacher").Result.Count() >= 50)
+            {
+                return;
+            }
 
+            School vl = context.School.FirstOrDefault(x => x.CodeByAdmin == "1");
+            School hb = context.School.FirstOrDefault(x => x.CodeByAdmin == "2");
+
+            for (int i = 0; i < 50; i++)
+            {
+                try
+                {
+                    Random random = new Random();
+                    ICollection<Certificate> certificatesVl = new HashSet<Certificate>();
+                    ICollection<Certificate> certificatesHb = new HashSet<Certificate>();
+                    for (int j = 0; j < 5; j++)
+                    {
+                        certificatesVl.Add(new Certificate()
+                        {
+                            DateOfIssue = DateTime.Now.AddMonths(random.Next(-10, 10)),
+                            ValidMonths = 3
+                        }
+                        );
+                        certificatesHb.Add(new Certificate()
+                        {
+                            DateOfIssue = DateTime.Now.AddMonths(random.Next(-10, 10)),
+                            ValidMonths = 3
+                        }
+                        );
+                    }
+
+                    User vlTeacher = new User()
+                    {
+                        UserName = $"vlteacher{i}",
+                        Email = $"vlteacher{i}@vl.bg",
+                        FirstName = $"TeacherVl{i}",
+                        MiddleName = $"TeacherVl{i}",
+                        LastName = $"TeacherVl{i}",
+                        SchoolId = vl.Id,
+                        Certificate = certificatesVl
+                    };
+                    var resultVl = this.userManager.CreateAsync(vlTeacher, "admin").GetAwaiter().GetResult();
+                    var roleResult1 = this.userManager.AddToRoleAsync(vlTeacher, "Teacher").GetAwaiter().GetResult();
+                    User hbTeacher = new User()
+                    {
+                        UserName = $"hbteacher{i}",
+                        Email = $"hbteacher{i}@hb.bg",
+                        FirstName = $"TeacherHb{i}",
+                        MiddleName = $"TeacherHb{i}",
+                        LastName = $"TeacherHb{i}",
+                        SchoolId = hb.Id,
+                        Certificate = certificatesHb
+                    };
+
+                    var resultHb = this.userManager.CreateAsync(hbTeacher, "admin").GetAwaiter().GetResult();
+
+                    var roleResult2 = this.userManager.AddToRoleAsync(hbTeacher, "Teacher").GetAwaiter().GetResult();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+        }
         public async Task SeedSchoolAndSchoolAdmins()
         {
             if (context.School.Any())
